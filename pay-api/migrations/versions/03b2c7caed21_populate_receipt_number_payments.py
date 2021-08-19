@@ -16,19 +16,20 @@ depends_on = None
 
 
 def upgrade():
-    conn = op.get_bind()
-    res = conn.execute(f"select id, invoice_number from payments where receipt_number is null;")
-    results = res.fetchall()
-    for result in results:
-        pay_id = result[0]
-        invoice_number = result[1]
-        res = conn.execute(f"select r.receipt_number from receipts r left join invoice_references ir "
-                           f"on ir.invoice_id=r.invoice_id where ir.status_code='COMPLETED' "
-                           f"and invoice_number='{invoice_number}'")
-        receipt_number_result = res.fetchall()
-        if receipt_number_result:
-            receipt_number = receipt_number_result[0][0]
-            op.execute(f"update payments set receipt_number='{receipt_number}' where id = {pay_id}")
+    # conn = op.get_bind()
+    # res = conn.execute(f"select id, invoice_number from payments where receipt_number is null;")
+    # results = res.fetchall()
+    # for result in results:
+    #     pay_id = result[0]
+    #     invoice_number = result[1]
+    #     res = conn.execute(f"select r.receipt_number from receipts r left join invoice_references ir "
+    #                        f"on ir.invoice_id=r.invoice_id where ir.status_code='COMPLETED' "
+    #                        f"and invoice_number='{invoice_number}'")
+    #     receipt_number_result = res.fetchall()
+    #     if receipt_number_result:
+    #         receipt_number = receipt_number_result[0][0]
+    #         op.execute(f"update payments set receipt_number='{receipt_number}' where id = {pay_id}")
+    pass
 
 
 def downgrade():
